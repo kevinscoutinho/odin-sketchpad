@@ -10,7 +10,8 @@ function createSquares(padResolution) {
     return square
 }
 
-function sketchpadResolution(padResolution) {
+function sketchpadResolution() {
+    const padResolution = document.querySelector('input.slider').value;
     const center = document.querySelector('div.center');
     let sketchpad = document.querySelector('div.pad');
     center.removeChild(sketchpad);
@@ -71,6 +72,7 @@ const buttonClear = document.querySelector('button.clear');
 
 slider.addEventListener('input', outputResolution);
 
+applyButton.addEventListener('click', sketchpadResolution);
 pencil.addEventListener('click', changeToPencil);
 eraser.addEventListener('click', changeToEraser);
 buttonClear.addEventListener('click', clearPad);
