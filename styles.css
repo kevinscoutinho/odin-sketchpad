@@ -1,0 +1,112 @@
+@font-face {
+    font-family: Handjet;
+    src: url(./fonts/Handjet/Handjet-VariableFont_ELGR\,ELSH\,wght.ttf);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    font-family: handjet;
+    font-size: 20px;
+    margin: 0px;
+    height: 100vh;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+div.title {
+    height: 100px;
+    min-height: 100px;
+    font-size: 60px;
+    font-weight: 700;
+    text-shadow: 20px 10px 12px;
+}
+
+div.pad {
+    flex-wrap: wrap;
+    padding: 0px;
+    min-height: 600px;
+    max-height: 600px;
+    min-width: 600px;
+    max-width: 600px;
+    box-shadow: 5px 5px 5px 5px;
+    cursor: url(./images/pencil.png) , auto;
+}
+
+div.pad.eraser {
+    cursor: url(./images/eraser.png) , auto;
+}
+
+/*
+div.square:hover {
+    background-color: black;
+}
+*/
+
+div.pad-resolution {
+    min-height: 100px;
+    width: 100%;
+    gap: 20px;
+    font-size: 25px;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 600px;
+    background: rgb(206, 206, 206);
+    box-shadow: 2px 2px 5px 2px;
+    border: 1px solid;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: gray;
+    cursor: url(./images/cursor-finger.png) , auto;
+}
+
+
+div.buttons {
+    gap: 20px;
+    min-height: 80px;
+}
+
+div.selected-color {
+    height: 40px;
+    width: 40px;
+    background-color: black;
+    box-shadow: 2px 2px 5px 2px;
+}
+
+button {
+    font-family: handjet;
+    font-size: 20px;
+    height: 40px;
+    min-width: 130px;
+    border-radius: 0px;
+    box-shadow: 2px 2px 5px 2px;
+    cursor: url(./images/cursor-finger.png) , auto;
+}
+
+button.apply-resolution {
+    min-width: 80px;
+}
+
+div.footer {
+    justify-self: flex-end;
+    font-size: 30px;
+    min-height: 100px;
+}
+
+img.github-logo {
+    height: 30px;
+}
