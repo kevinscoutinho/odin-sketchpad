@@ -49,21 +49,27 @@ function clearPad() {
     height: ${square.style.height}`);
 }
 
+function outputResolution() {
+    const setResolution = document.querySelector('p.resolution');
+    setResolution.textContent = `${this.value} x ${this.value}`;
+}
+
 //const squares = document.querySelectorAll('div.square');
 
 //squares.forEach((square) => square.addEventListener('mousemove', paint))
 
+const slider = document.querySelector('input.slider');
+
+const applyButton = document.querySelector('button.apply-resolution');
 const pencil = document.querySelector('div.buttons button.pencil');
 const buttonRGB = document.querySelector('button.rgb');
 const buttonDarkening = document.querySelector('button.darkening');
 const eraser = document.querySelector('button.eraser');
 const buttonClear = document.querySelector('button.clear');
 
-console.log(pencil);
-console.log(eraser);
-console.log(buttonRGB);
-console.log(buttonClear);
-console.log(buttonDarkening);
+
+
+slider.addEventListener('input', outputResolution);
 
 pencil.addEventListener('click', changeToPencil);
 eraser.addEventListener('click', changeToEraser);

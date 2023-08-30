@@ -74,6 +74,17 @@ div.pad-resolution {
     cursor: url(./images/cursor-finger.png) , auto;
 }
 
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: gray;
+    cursor: url(./images/cursor-finger.png) , auto;
+}
+
+p.resolution {
+    min-width: 130px;
+    margin-right: 93px;
+}
 
 div.buttons {
     gap: 20px;
