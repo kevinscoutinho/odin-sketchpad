@@ -1,3 +1,4 @@
+//will calculate how many squares the pad will have
 function createSquares(padResolution) {
     const square = [];
     let squareSize = 600/padResolution;
@@ -10,6 +11,7 @@ function createSquares(padResolution) {
     return square
 }
 
+//will alter the pad resolution according to the slider value
 function sketchpadResolution() {
     const padResolution = document.querySelector('input.slider').value;
     const center = document.querySelector('div.center');
@@ -23,6 +25,8 @@ function sketchpadResolution() {
     for (let i = 0; i < padResolution**2; i++) {
         sketchpad.appendChild(square[i]);
     }
+    const squares = document.querySelectorAll('div.square');
+    squares.forEach((square) => square.addEventListener('click', paint))
 }
 
 function changeToEraser() {
@@ -37,7 +41,7 @@ function changeToPencil() {
 
 function paint() {
     this.style.cssText = `
-    background-color: black;
+    background-color: ${document.getElementById('color-picker').value};
     width: ${this.style.width};
     height: ${this.style.height}`;
 }
@@ -55,11 +59,11 @@ function outputResolution() {
     setResolution.textContent = `${this.value} x ${this.value}`;
 }
 
-//const squares = document.querySelectorAll('div.square');
-
-//squares.forEach((square) => square.addEventListener('mousemove', paint))
+sketchpadResolution();
 
 const slider = document.querySelector('input.slider');
+
+const color = document.getElementById('color-picker');
 
 const applyButton = document.querySelector('button.apply-resolution');
 const pencil = document.querySelector('div.buttons button.pencil');
@@ -71,6 +75,8 @@ const buttonClear = document.querySelector('button.clear');
 
 
 slider.addEventListener('input', outputResolution);
+
+
 
 applyButton.addEventListener('click', sketchpadResolution);
 pencil.addEventListener('click', changeToPencil);

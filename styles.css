@@ -92,11 +92,26 @@ div.buttons {
 }
 
 div.selected-color {
+    background-color: black;
     height: 40px;
     width: 40px;
-    background-color: black;
     box-shadow: 2px 2px 5px 2px;
+    cursor: url(./images/cursor-finger.png) , auto;
 }
+
+input#color-picker {
+    opacity: 0;
+    height: 40px;
+    width: 40px;
+    box-shadow: 2px 2px 5px 2px;
+    border: none;
+    cursor: url(./images/cursor-finger.png) , auto;
+}
+
+input#color-picker::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
 
 button {
     font-family: handjet;
