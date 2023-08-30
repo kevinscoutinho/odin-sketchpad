@@ -63,14 +63,19 @@ function erase() {
 function clearPad() {
     const squares = document.querySelectorAll('div.square');
     squares.forEach((square) => square.style.cssText = `
-    background-color: white;
-    width: ${square.style.width};
-    height: ${square.style.height}`);
+        background-color: white;
+        width: ${square.style.width};
+        height: ${square.style.height}`);
 }
 
 function outputResolution() {
     const setResolution = document.querySelector('p.resolution');
     setResolution.textContent = `${this.value} x ${this.value}`;
+}
+
+function showChosenColor() {
+    document.querySelector('div.selected-color').style.cssText = `
+        background-color: ${document.getElementById('color-picker').value};`;
 }
 
 sketchpadResolution();
@@ -90,7 +95,7 @@ const buttonClear = document.querySelector('button.clear');
 
 slider.addEventListener('input', outputResolution);
 
-
+color.addEventListener('input', showChosenColor);
 
 applyButton.addEventListener('click', sketchpadResolution);
 pencil.addEventListener('click', changeToPencil);
