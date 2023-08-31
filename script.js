@@ -25,39 +25,43 @@ function sketchpadResolution() {
     for (let i = 0; i < padResolution**2; i++) {
         sketchpad.appendChild(square[i]);
     }
-    const squares = document.querySelectorAll('div.square');
-    squares.forEach((square) => square.addEventListener('click', paint))
     changeToPencil()
 }
+
 
 function changeToEraser() {
     sketchpad = document.querySelector('div.pad');
     sketchpad.classList.add('eraser');
     const squares = document.querySelectorAll('div.square');
-    squares.forEach((square) => square.removeEventListener('click', paint));
-    squares.forEach((square) => square.addEventListener('click', erase))
+    squares.forEach((square) => square.removeEventListener('mousemove', paint));
+    squares.forEach((square) => square.addEventListener('mousemove', erase))
 }
+
 
 function changeToPencil() {
     sketchpad = document.querySelector('div.pad');
     sketchpad.classList.remove('eraser');
     const squares = document.querySelectorAll('div.square');
-    squares.forEach((square) => square.removeEventListener('click', erase));
-    squares.forEach((square) => square.addEventListener('click', paint));
+    squares.forEach((square) => square.removeEventListener('mousemove', erase));
+    squares.forEach((square) => square.addEventListener('mousemove', paint));
 }
 
 function paint() {
-    this.style.cssText = `
-    background-color: ${document.getElementById('color-picker').value};
-    width: ${this.style.width};
-    height: ${this.style.height}`;
+    if (mousedown) {
+        this.style.cssText = `
+        background-color: ${document.getElementById('color-picker').value};
+        width: ${this.style.width};
+        height: ${this.style.height}`;
+    }
 }
 
 function erase() {
-    this.style.cssText = `
-    background-color: white;
-    width: ${this.style.width};
-    height: ${this.style.height}`;
+    if (mousedown) {
+        this.style.cssText = `
+        background-color: white;
+        width: ${this.style.width};
+        height: ${this.style.height}`;
+    }
 }
 
 function clearPad() {
@@ -101,3 +105,6 @@ applyButton.addEventListener('click', sketchpadResolution);
 pencil.addEventListener('click', changeToPencil);
 eraser.addEventListener('click', changeToEraser);
 buttonClear.addEventListener('click', clearPad);
+
+document.addEventListener('mousedown', () => mousedown = true);
+document.addEventListener('mouseup', () => mousedown = false);
