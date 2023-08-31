@@ -45,12 +45,6 @@ div.pad.eraser {
     cursor: url(./images/eraser.png) , auto;
 }
 
-/*
-div.square:hover {
-    background-color: black;
-}
-*/
-
 div.pad-resolution {
     min-height: 100px;
     width: 100%;

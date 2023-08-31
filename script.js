@@ -109,7 +109,6 @@ const color = document.getElementById('color-picker');
 const applyButton = document.querySelector('button.apply-resolution');
 const pencil = document.querySelector('div.buttons button.pencil');
 const RGBButton = document.querySelector('button.rgb');
-const buttonDarkening = document.querySelector('button.darkening');
 const eraser = document.querySelector('button.eraser');
 const buttonClear = document.querySelector('button.clear');
 
