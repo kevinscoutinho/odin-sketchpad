@@ -28,28 +28,46 @@ function sketchpadResolution() {
     changeToPencil()
 }
 
+function changeToPencil() {
+    sketchpad = document.querySelector('div.pad');
+    sketchpad.classList.remove('eraser');
+    const squares = document.querySelectorAll('div.square');
+    squares.forEach((square) => square.removeEventListener('mousemove', rgb));
+    squares.forEach((square) => square.removeEventListener('mousemove', erase));
+    squares.forEach((square) => square.addEventListener('mousemove', paint));
+}
+
+function changeToRGB() {
+    sketchpad = document.querySelector('div.pad');
+    sketchpad.classList.remove('eraser');
+    const squares = document.querySelectorAll('div.square');
+    squares.forEach((square) => square.removeEventListener('mousemove', erase));
+    squares.forEach((square) => square.removeEventListener('mousemove', paint));
+    squares.forEach((square) => square.addEventListener('mousemove', rgb));
+}
 
 function changeToEraser() {
     sketchpad = document.querySelector('div.pad');
     sketchpad.classList.add('eraser');
     const squares = document.querySelectorAll('div.square');
+    squares.forEach((square) => square.removeEventListener('mousemove', rgb));
     squares.forEach((square) => square.removeEventListener('mousemove', paint));
     squares.forEach((square) => square.addEventListener('mousemove', erase))
-}
-
-
-function changeToPencil() {
-    sketchpad = document.querySelector('div.pad');
-    sketchpad.classList.remove('eraser');
-    const squares = document.querySelectorAll('div.square');
-    squares.forEach((square) => square.removeEventListener('mousemove', erase));
-    squares.forEach((square) => square.addEventListener('mousemove', paint));
 }
 
 function paint() {
     if (mousedown) {
         this.style.cssText = `
         background-color: ${document.getElementById('color-picker').value};
+        width: ${this.style.width};
+        height: ${this.style.height}`;
+    }
+}
+
+function rgb() {
+    if (mousedown) {
+        this.style.cssText = `
+        background-color: rgb(${Math.floor(Math.random() * 256)} ${Math.floor(Math.random() * 256)} ${Math.floor(Math.random() * 256)});
         width: ${this.style.width};
         height: ${this.style.height}`;
     }
@@ -90,7 +108,7 @@ const color = document.getElementById('color-picker');
 
 const applyButton = document.querySelector('button.apply-resolution');
 const pencil = document.querySelector('div.buttons button.pencil');
-const buttonRGB = document.querySelector('button.rgb');
+const RGBButton = document.querySelector('button.rgb');
 const buttonDarkening = document.querySelector('button.darkening');
 const eraser = document.querySelector('button.eraser');
 const buttonClear = document.querySelector('button.clear');
@@ -103,6 +121,7 @@ color.addEventListener('input', showChosenColor);
 
 applyButton.addEventListener('click', sketchpadResolution);
 pencil.addEventListener('click', changeToPencil);
+RGBButton.addEventListener('click', changeToRGB);
 eraser.addEventListener('click', changeToEraser);
 buttonClear.addEventListener('click', clearPad);
 
