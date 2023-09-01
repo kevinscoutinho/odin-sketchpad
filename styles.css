@@ -13,6 +13,15 @@ body {
     font-size: 20px;
     margin: 0px;
     height: 100vh;
+    -webkit-user-drag: none;
+}
+
+div.square.grid-active {
+    border: 1px solid;
+}
+
+div.square {
+    box-sizing: border-box;
 }
 
 div {
@@ -39,6 +48,11 @@ div.pad {
     max-width: 600px;
     box-shadow: 5px 5px 5px 5px;
     cursor: url(./images/pencil.png) , auto;
+    -webkit-user-drag: none;
+}
+
+div.square {
+    -webkit-user-drag: none;
 }
 
 div.pad.eraser {

@@ -25,7 +25,7 @@ function sketchpadResolution() {
     for (let i = 0; i < padResolution**2; i++) {
         sketchpad.appendChild(square[i]);
     }
-    changeToPencil()
+    changeToPencil();
 }
 
 function changeToPencil() {
@@ -90,6 +90,15 @@ function clearPad() {
         height: ${square.style.height}`);
 }
 
+function showGrid() {
+    const squares = document.querySelectorAll('div.square');
+    if (getComputedStyle(squares[1]).border.split(" ")[0] == "1px") {
+        squares.forEach((square) => square.classList.remove('grid-active'));
+    } else {
+        squares.forEach((square) => square.classList.add('grid-active'));
+    }
+}
+
 function outputResolution() {
     const setResolution = document.querySelector('p.resolution');
     setResolution.textContent = `${this.value} x ${this.value}`;
@@ -111,8 +120,7 @@ const pencil = document.querySelector('div.buttons button.pencil');
 const RGBButton = document.querySelector('button.rgb');
 const eraser = document.querySelector('button.eraser');
 const buttonClear = document.querySelector('button.clear');
-
-
+gridButton = document.querySelector('button.grid');
 
 slider.addEventListener('input', outputResolution);
 
@@ -123,6 +131,9 @@ pencil.addEventListener('click', changeToPencil);
 RGBButton.addEventListener('click', changeToRGB);
 eraser.addEventListener('click', changeToEraser);
 buttonClear.addEventListener('click', clearPad);
+gridButton.addEventListener('click', showGrid);
 
-document.addEventListener('mousedown', () => mousedown = true);
-document.addEventListener('mouseup', () => mousedown = false);
+let mousedown = false;
+
+document.onmousedown = () => mousedown = true;
+document.onmouseup = () => mousedown = false;
