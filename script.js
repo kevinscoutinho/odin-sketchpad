@@ -13,23 +13,23 @@ function calcNumberOfSquares(sketchpadResolution) {
 
 //will delete and recreate the sketchpad container
 function recreateSketchpadContainer() {
-    const center = document.querySelector('div.center');
+    const centerContainer = document.querySelector('div.center');
     let sketchpadContainer = document.querySelector('div.sketchpad');
-    center.removeChild(sketchpadContainer);
+    centerContainer.removeChild(sketchpadContainer);
     const sketchpad = document.createElement('div');
     sketchpad.classList.add('sketchpad');
-    center.appendChild(sketchpad);
+    centerContainer.appendChild(sketchpad);
 }
 
 //will genarate the sketchpad or alter the sketchpad resolution according to the slider value
 function createSketchpad() {
     recreateSketchpadContainer();
 
-    sketchpad = document.querySelector('div.sketchpad');
+    sketchpadContainer = document.querySelector('div.sketchpad');
     const sketchpadResolution = document.querySelector('input.slider').value;
     const square = calcNumberOfSquares(sketchpadResolution);
     for (let i = 0; i < sketchpadResolution**2; i++) {
-        sketchpad.appendChild(square[i]);
+        sketchpadContainer.appendChild(square[i]);
     }
 
     const squares = document.querySelectorAll('div.square');
@@ -39,34 +39,36 @@ function createSketchpad() {
 
 //will change to pencil mode//
 function changeToPencil() {
-    sketchpad = document.querySelector('div.sketchpad');
-    sketchpad.classList.remove('eraser');
-    mode = 'pencil';
+    sketchpadContainer = document.querySelector('div.sketchpad');
+    sketchpadContainer.classList.remove('eraser');
+    paintingMode = 'pencil';
 }
 
 //will change to RGB mode//
 function changeToRGB() {
-    sketchpad = document.querySelector('div.sketchpad');
-    sketchpad.classList.remove('eraser');
-    mode = 'rgb';
+    sketchpadContainer = document.querySelector('div.sketchpad');
+    sketchpadContainer.classList.remove('eraser');
+    paintingMode = 'rgb';
 }
 
 //will chanbe to eraser mode//
 function changeToEraser() {
-    sketchpad = document.querySelector('div.sketchpad');
-    sketchpad.classList.add('eraser');
-    mode = 'eraser';
+    sketchpadContainer = document.querySelector('div.sketchpad');
+    sketchpadContainer.classList.add('eraser');
+    paintingMode = 'eraser';
 }
 
 //will paint the sketchpad according to the selected mode//
 function paint() {
     if (!mousedown) return
-    switch (mode) {
+    switch (paintingMode) {
         case 'pencil':
             this.style.backgroundColor = document.getElementById('color-picker').value;
             break;
         case 'rgb':
-            this.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)} ${Math.floor(Math.random() * 256)} ${Math.floor(Math.random() * 256)})`;
+            this.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)} 
+            ${Math.floor(Math.random() * 256)} 
+            ${Math.floor(Math.random() * 256)})`;
             break;
         case 'eraser':
             this.style.backgroundColor = 'white';
@@ -98,38 +100,37 @@ function outputResolution() {
 
 //will show the chosen color//
 function showChosenColor() {
-    document.querySelector('div.selected-color').style.cssText = `
-        background-color: ${document.getElementById('color-picker').value};`;
+    document.querySelector('div.selected-color').style.backgroundColor = document.getElementById('color-picker').value;
 }
 
 //will initiate the sketchpad//
 createSketchpad();
 
-let mode = 'pencil';
+let mousedown = false;
+document.addEventListener('mousedown', () => mousedown = true);
+document.addEventListener('mouseup', () => mousedown = false);
 
-const slider = document.querySelector('input.slider');
+let paintingMode = 'pencil';
 
-const color = document.getElementById('color-picker');
+const resolutionSlider = document.querySelector('input.slider');
+
+const colorPicker = document.getElementById('color-picker');
 
 const applyButton = document.querySelector('button.apply-resolution');
 const pencil = document.querySelector('div.buttons button.pencil');
 const RGBButton = document.querySelector('button.rgb');
 const eraser = document.querySelector('button.eraser');
-const buttonClear = document.querySelector('button.clear');
+const clearButton = document.querySelector('button.clear');
 const gridButton = document.querySelector('button.grid');
 
 
-slider.addEventListener('input', outputResolution);
+resolutionSlider.addEventListener('input', outputResolution);
 
-color.addEventListener('input', showChosenColor);
+colorPicker.addEventListener('input', showChosenColor);
 
 applyButton.addEventListener('click', createSketchpad);
 pencil.addEventListener('click', changeToPencil);
 RGBButton.addEventListener('click', changeToRGB);
 eraser.addEventListener('click', changeToEraser);
-buttonClear.addEventListener('click', clearSketchpad);
+clearButton.addEventListener('click', clearSketchpad);
 gridButton.addEventListener('click', showGrid);
-
-let mousedown = false;
-document.addEventListener('mousedown', () => mousedown = true);
-document.addEventListener('mouseup', () => mousedown = false);
