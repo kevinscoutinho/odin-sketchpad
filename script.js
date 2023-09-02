@@ -1,8 +1,8 @@
 //will calculate how many squares the pad will have
-function createSquares(padResolution) {
+function calcNumberOfSquares(sketchpadResolution) {
     const square = [];
-    let squareSize = 600/padResolution;
-    for (let i = 0; i < padResolution**2; i++){
+    let squareSize = 600/sketchpadResolution;
+    for (let i = 0; i < sketchpadResolution**2; i++){
         square[i] = document.createElement(`div`);
         square[i].classList.add(`square`);
         square[i].classList.add(`n${i}`)
@@ -11,9 +11,9 @@ function createSquares(padResolution) {
     return square
 }
 
-//will genarate or alter the pad resolution according to the slider value
-function sketchpadResolution() {
-    const padResolution = document.querySelector('input.slider').value;
+//will genarate the pad or alter the pad resolution according to the slider value
+function createSketchpad() {
+    const sketchpadResolution = document.querySelector('input.slider').value;
     const center = document.querySelector('div.center');
     let sketchpad = document.querySelector('div.pad');
     center.removeChild(sketchpad);
@@ -21,70 +21,60 @@ function sketchpadResolution() {
     pad.classList.add('pad');
     center.appendChild(pad);
     sketchpad = document.querySelector('div.pad');
-    const square = createSquares(padResolution);
-    for (let i = 0; i < padResolution**2; i++) {
+    const square = calcNumberOfSquares(sketchpadResolution);
+    for (let i = 0; i < sketchpadResolution**2; i++) {
         sketchpad.appendChild(square[i]);
     }
-    changeToPencil();
-}
 
-function changeToPencil() {
-    sketchpad = document.querySelector('div.pad');
-    sketchpad.classList.remove('eraser');
     const squares = document.querySelectorAll('div.square');
-    squares.forEach((square) => square.removeEventListener('mousemove', rgb));
-    squares.forEach((square) => square.removeEventListener('mousemove', erase));
     squares.forEach((square) => square.addEventListener('mouseover', paint));
     squares.forEach((square) => square.addEventListener('mousedown', paint));
 }
 
+//will change to pencil mode//
+function changeToPencil() {
+    sketchpad = document.querySelector('div.pad');
+    sketchpad.classList.remove('eraser');
+    mode = 'pencil';
+}
+
+//will change to RGB mode//
 function changeToRGB() {
     sketchpad = document.querySelector('div.pad');
     sketchpad.classList.remove('eraser');
-    const squares = document.querySelectorAll('div.square');
-    squares.forEach((square) => square.removeEventListener('mousemove', erase));
-    squares.forEach((square) => square.removeEventListener('mousemove', paint));
-    squares.forEach((square) => square.addEventListener('mousemove', rgb));
+    mode = 'rgb';
 }
 
+//will chanbe to eraser mode//
 function changeToEraser() {
     sketchpad = document.querySelector('div.pad');
     sketchpad.classList.add('eraser');
-    const squares = document.querySelectorAll('div.square');
-    squares.forEach((square) => square.removeEventListener('mousemove', rgb));
-    squares.forEach((square) => square.removeEventListener('mousemove', paint));
-    squares.forEach((square) => square.addEventListener('mousemove', erase))
+    mode = 'eraser';
 }
 
+//will paint the pad according to the selected mode//
 function paint() {
-    if (mousedown) {
-        this.style.backgroundColor = document.getElementById('color-picker').value;
-    }
+    if (!mousedown) return
+    switch (mode) {
+        case 'pencil':
+            this.style.backgroundColor = document.getElementById('color-picker').value;
+            break;
+        case 'rgb':
+            this.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)} ${Math.floor(Math.random() * 256)} ${Math.floor(Math.random() * 256)})`;
+            break;
+        case 'eraser':
+            this.style.backgroundColor = 'white';
+            break;
+    } 
 }
 
-function rgb() {
-    if (mousedown) {
-        this.style.cssText = `
-        background-color: rgb(${Math.floor(Math.random() * 256)} ${Math.floor(Math.random() * 256)} ${Math.floor(Math.random() * 256)});
-        width: ${this.style.width};
-        height: ${this.style.height}`;
-    }
-}
-
-function erase() {
-    if (mousedown) {
-        this.style.backgroundColor = 'white';
-    }
-}
-
+//will clear the pad//
 function clearPad() {
     const squares = document.querySelectorAll('div.square');
-    squares.forEach((square) => square.style.cssText = `
-        background-color: white;
-        width: ${square.style.width};
-        height: ${square.style.height}`);
+    squares.forEach((square) => square.style.backgroundColor = "white");
 }
 
+//will show the grid//
 function showGrid() {
     const squares = document.querySelectorAll('div.square');
     if (getComputedStyle(squares[1]).border.split(" ")[0] == "1px") {
@@ -94,17 +84,22 @@ function showGrid() {
     }
 }
 
+//will exhibit the resolution of the slider//
 function outputResolution() {
     const setResolution = document.querySelector('p.resolution');
     setResolution.textContent = `${this.value} x ${this.value}`;
 }
 
+//will show the chosen color//
 function showChosenColor() {
     document.querySelector('div.selected-color').style.cssText = `
         background-color: ${document.getElementById('color-picker').value};`;
 }
 
-sketchpadResolution();
+//will initiate the pad//
+createSketchpad();
+
+let mode = 'pencil';
 
 const slider = document.querySelector('input.slider');
 
@@ -115,13 +110,13 @@ const pencil = document.querySelector('div.buttons button.pencil');
 const RGBButton = document.querySelector('button.rgb');
 const eraser = document.querySelector('button.eraser');
 const buttonClear = document.querySelector('button.clear');
-gridButton = document.querySelector('button.grid');
+const gridButton = document.querySelector('button.grid');
 
 slider.addEventListener('input', outputResolution);
 
 color.addEventListener('input', showChosenColor);
 
-applyButton.addEventListener('click', sketchpadResolution);
+applyButton.addEventListener('click', createSketchpad);
 pencil.addEventListener('click', changeToPencil);
 RGBButton.addEventListener('click', changeToRGB);
 eraser.addEventListener('click', changeToEraser);
