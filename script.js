@@ -11,7 +11,7 @@ function createSquares(padResolution) {
     return square
 }
 
-//will alter the pad resolution according to the slider value
+//will genarate or alter the pad resolution according to the slider value
 function sketchpadResolution() {
     const padResolution = document.querySelector('input.slider').value;
     const center = document.querySelector('div.center');
@@ -34,7 +34,8 @@ function changeToPencil() {
     const squares = document.querySelectorAll('div.square');
     squares.forEach((square) => square.removeEventListener('mousemove', rgb));
     squares.forEach((square) => square.removeEventListener('mousemove', erase));
-    squares.forEach((square) => square.addEventListener('mousemove', paint));
+    squares.forEach((square) => square.addEventListener('mouseover', paint));
+    squares.forEach((square) => square.addEventListener('mousedown', paint));
 }
 
 function changeToRGB() {
@@ -57,10 +58,7 @@ function changeToEraser() {
 
 function paint() {
     if (mousedown) {
-        this.style.cssText = `
-        background-color: ${document.getElementById('color-picker').value};
-        width: ${this.style.width};
-        height: ${this.style.height}`;
+        this.style.backgroundColor = document.getElementById('color-picker').value;
     }
 }
 
@@ -75,10 +73,7 @@ function rgb() {
 
 function erase() {
     if (mousedown) {
-        this.style.cssText = `
-        background-color: white;
-        width: ${this.style.width};
-        height: ${this.style.height}`;
+        this.style.backgroundColor = 'white';
     }
 }
 
@@ -134,6 +129,5 @@ buttonClear.addEventListener('click', clearPad);
 gridButton.addEventListener('click', showGrid);
 
 let mousedown = false;
-
-document.onmousedown = () => mousedown = true;
-document.onmouseup = () => mousedown = false;
+document.addEventListener('mousedown', () => mousedown = true);
+document.addEventListener('mouseup', () => mousedown = false);

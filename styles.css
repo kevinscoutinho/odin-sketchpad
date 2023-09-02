@@ -22,6 +22,7 @@ div.square.grid-active {
 
 div.square {
     box-sizing: border-box;
+    user-select: none;
 }
 
 div {
@@ -48,10 +49,6 @@ div.pad {
     max-width: 600px;
     box-shadow: 5px 5px 5px 5px;
     cursor: url(./images/pencil.png) , auto;
-    -webkit-user-drag: none;
-}
-
-div.square {
     -webkit-user-drag: none;
 }
 
