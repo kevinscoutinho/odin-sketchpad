@@ -59,11 +59,12 @@ function changeToEraser() {
 }
 
 //will paint the sketchpad according to the selected mode//
-function paint() {
-    if (!mousedown) return
+function paint(e) {
+    if (!mousedown && e.type == 'mouseover') return
     switch (paintingMode) {
         case 'pencil':
             this.style.backgroundColor = document.getElementById('color-picker').value;
+            console.log(e.type);
             break;
         case 'rgb':
             this.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)} 
