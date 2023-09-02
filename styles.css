@@ -40,7 +40,7 @@ div.title {
     text-shadow: 20px 10px 12px;
 }
 
-div.pad {
+div.sketchpad {
     flex-wrap: wrap;
     padding: 0px;
     min-height: 600px;
@@ -52,11 +52,11 @@ div.pad {
     -webkit-user-drag: none;
 }
 
-div.pad.eraser {
+div.sketchpad.eraser {
     cursor: url(./images/eraser.png) , auto;
 }
 
-div.pad-resolution {
+div.sketchpad-resolution {
     min-height: 100px;
     width: 100%;
     gap: 20px;

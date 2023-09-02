@@ -11,16 +11,22 @@ function calcNumberOfSquares(sketchpadResolution) {
     return square
 }
 
-//will genarate the pad or alter the pad resolution according to the slider value
-function createSketchpad() {
-    const sketchpadResolution = document.querySelector('input.slider').value;
+//will delete and recreate the sketchpad container
+function recreateSketchpadContainer() {
     const center = document.querySelector('div.center');
-    let sketchpad = document.querySelector('div.pad');
-    center.removeChild(sketchpad);
-    const pad = document.createElement('div');
-    pad.classList.add('pad');
-    center.appendChild(pad);
-    sketchpad = document.querySelector('div.pad');
+    let sketchpadContainer = document.querySelector('div.sketchpad');
+    center.removeChild(sketchpadContainer);
+    const sketchpad = document.createElement('div');
+    sketchpad.classList.add('sketchpad');
+    center.appendChild(sketchpad);
+}
+
+//will genarate the sketchpad or alter the sketchpad resolution according to the slider value
+function createSketchpad() {
+    recreateSketchpadContainer();
+
+    sketchpad = document.querySelector('div.sketchpad');
+    const sketchpadResolution = document.querySelector('input.slider').value;
     const square = calcNumberOfSquares(sketchpadResolution);
     for (let i = 0; i < sketchpadResolution**2; i++) {
         sketchpad.appendChild(square[i]);
@@ -33,26 +39,26 @@ function createSketchpad() {
 
 //will change to pencil mode//
 function changeToPencil() {
-    sketchpad = document.querySelector('div.pad');
+    sketchpad = document.querySelector('div.sketchpad');
     sketchpad.classList.remove('eraser');
     mode = 'pencil';
 }
 
 //will change to RGB mode//
 function changeToRGB() {
-    sketchpad = document.querySelector('div.pad');
+    sketchpad = document.querySelector('div.sketchpad');
     sketchpad.classList.remove('eraser');
     mode = 'rgb';
 }
 
 //will chanbe to eraser mode//
 function changeToEraser() {
-    sketchpad = document.querySelector('div.pad');
+    sketchpad = document.querySelector('div.sketchpad');
     sketchpad.classList.add('eraser');
     mode = 'eraser';
 }
 
-//will paint the pad according to the selected mode//
+//will paint the sketchpad according to the selected mode//
 function paint() {
     if (!mousedown) return
     switch (mode) {
@@ -68,8 +74,8 @@ function paint() {
     } 
 }
 
-//will clear the pad//
-function clearPad() {
+//will clear the sketchpad//
+function clearSketchpad() {
     const squares = document.querySelectorAll('div.square');
     squares.forEach((square) => square.style.backgroundColor = "white");
 }
@@ -96,7 +102,7 @@ function showChosenColor() {
         background-color: ${document.getElementById('color-picker').value};`;
 }
 
-//will initiate the pad//
+//will initiate the sketchpad//
 createSketchpad();
 
 let mode = 'pencil';
@@ -112,6 +118,7 @@ const eraser = document.querySelector('button.eraser');
 const buttonClear = document.querySelector('button.clear');
 const gridButton = document.querySelector('button.grid');
 
+
 slider.addEventListener('input', outputResolution);
 
 color.addEventListener('input', showChosenColor);
@@ -120,7 +127,7 @@ applyButton.addEventListener('click', createSketchpad);
 pencil.addEventListener('click', changeToPencil);
 RGBButton.addEventListener('click', changeToRGB);
 eraser.addEventListener('click', changeToEraser);
-buttonClear.addEventListener('click', clearPad);
+buttonClear.addEventListener('click', clearSketchpad);
 gridButton.addEventListener('click', showGrid);
 
 let mousedown = false;
