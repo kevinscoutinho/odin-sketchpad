@@ -86,7 +86,7 @@ function clearSketchpad() {
 //will show the grid//
 function showGrid() {
     const squares = document.querySelectorAll('div.square');
-    if (getComputedStyle(squares[1]).border.split(" ")[0] == "1px") {
+    if (getComputedStyle(squares[1]).border.split(" ")[0] != "0px") {
         squares.forEach((square) => square.classList.remove('grid-active'));
     } else {
         squares.forEach((square) => square.classList.add('grid-active'));
